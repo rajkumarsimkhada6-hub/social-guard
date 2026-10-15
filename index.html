@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOCIAL GUARD - Scam & Link Checker</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between font-sans">
+
+    <!-- Header -->
+    <header class="bg-slate-800 border-b border-slate-700 py-4 px-6 text-center shadow-lg">
+        <div class="flex items-center justify-center gap-2">
+            <i class="fa-solid fa-shield-halved text-emerald-400 text-3xl"></i>
+            <h1 class="text-2xl font-bold tracking-wide text-white">SOCIAL GUARD</h1>
+        </div>
+        <p class="text-xs text-slate-400 mt-1">शंकास्पद लिङ्क जाँच गर्नुहोस् र स्क्याम रिपोर्ट गर्नुहोस्</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 max-w-lg flex-1">
+        
+        <!-- Link Checker Card -->
+        <div class="bg-slate-800 p-6 rounded-2xl shadow-xl border border-slate-700">
+            <h2 class="text-lg font-semibold mb-4 flex items-center gap-2 text-emerald-400">
+                <i class="fa-solid fa-magnifying-glass"></i> लिङ्क जाँच गर्नुहोस् (Check Link)
+            </h2>
+            <div class="space-y-4">
+                <div>
+                    <input type="text" id="linkInput" placeholder="यहाँ लिङ्क वा मेसेज पेस्ट गर्नुहोस्..." 
+                        class="w-full p-3 rounded-xl bg-slate-900 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 text-sm">
+                </div>
+                <button onclick="checkLink()" 
+                    class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 rounded-xl shadow-md transition duration-200">
+                    जाँच गर्नुहोस् (Verify)
+                </button>
+            </div>
+
+            <!-- Result Box -->
+            <div id="resultBox" class="mt-5 hidden p-4 rounded-xl text-sm border"></div>
+        </div>
+
+        <!-- Report Button Card -->
+        <div class="mt-6 bg-slate-800 p-6 rounded-2xl shadow-xl border border-slate-700 text-center">
+            <h3 class="text-md font-medium text-slate-300 mb-2">के तपाईँले नयाँ स्क्याम वा शंकास्पद गतिविधि भेट्नुभयो?</h3>
+            <p class="text-xs text-slate-400 mb-4">अन्य प्रयोगकर्ताहरूलाई जोगाउन रिपोर्ट पठाउनुहोस्।</p>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSePCPJvfOU_yjBWu6w08mSCaV5uikpEyvzOGv-yMSnltmGIZQ/viewform?usp=dialog" 
+               target="_blank" 
+               class="inline-flex items-center justify-center gap-2 w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-xl shadow-md transition duration-200">
+                <i class="fa-solid fa-triangle-exclamation"></i> स्क्याम रिपोर्ट गर्नुहोस् (Report Scam)
+            </a>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 text-xs text-slate-500 border-t border-slate-800">
+        &copy; 2026 SOCIAL GUARD. All rights reserved.
+    </footer>
+
+    <!-- JavaScript for Verification -->
+    <script>
+        function checkLink() {
+            const input = document.getElementById('linkInput').value.trim();
+            const resultBox = document.getElementById('resultBox');
+
+            if (!input) {
+                alert('कृपया कुनै लिङ्क वा मेसेज हाल्नुहोस्!');
+                return;
+            }
+
+            resultBox.classList.remove('hidden', 'bg-red-950', 'border-red-600', 'text-red-200', 'bg-emerald-950', 'border-emerald-600', 'text-emerald-200', 'bg-yellow-950', 'border-yellow-600', 'text-yellow-200');
+
+            // Suspicious patterns
+            const suspiciousKeywords = ['bit.ly', 'tinyurl', 'free-gift', 'lottery', 'claim-now', 'whatsapp-group', 'telegram-link', 'login-verify', 'click-here'];
+            const lowerInput = input.toLowerCase();
+
+            let isSuspicious = suspiciousKeywords.some(keyword => lowerInput.includes(keyword));
+
+            if (isSuspicious) {
+                resultBox.classList.add('bg-red-950', 'border-red-600', 'text-red-200');
+                resultBox.innerHTML = `
+                    <div class="flex items-start gap-2">
+                        <i class="fa-solid fa-triangle-exclamation text-xl text-red-500 mt-0.5"></i>
+                        <div>
+                            <strong class="block text-red-400 font-bold mb-1">चेतावनी: यो शंकास्पद लिङ्क हुन सक्छ!</strong>
+                            यस्ता लिङ्कमा व्यक्तिगत जानकारी, पासवर्ड वा OTP हाल्ने नगर्नुहोस्।
+                        </div>
+                    </div>
+                `;
+            } else if (input.startsWith('http://') || !input.startsWith('https://')) {
+                resultBox.classList.add('bg-yellow-950', 'border-yellow-600', 'text-yellow-200');
+                resultBox.innerHTML = `
+                    <div class="flex items-start gap-2">
+                        <i class="fa-solid fa-circle-exclamation text-xl text-yellow-500 mt-0.5"></i>
+                        <div>
+                            <strong class="block text-yellow-400 font-bold mb-1">सावधानी अपनाउनुहोस्!</strong>
+                            यो लिङ्क असुरक्षित (HTTP) देखिन्छ वा पूर्ण URL ढाँचामा छैन।
+                        </div>
+                    </div>
+                `;
+            } else {
+                resultBox.classList.add('bg-emerald-950', 'border-emerald-600', 'text-emerald-200');
+                resultBox.innerHTML = `
+                    <div class="flex items-start gap-2">
+                        <i class="fa-solid fa-circle-check text-xl text-emerald-500 mt-0.5"></i>
+                        <div>
+                            <strong class="block text-emerald-400 font-bold mb-1">सुरक्षित जस्तो देखिन्छ</strong>
+                            यद्यपि अज्ञात स्रोतबाट आएका मेसेज वा लिङ्कहरू खोल्दा सधैँ सचेत रहनुहोस्।
+                        </div>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
