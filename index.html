@@ -22,22 +22,16 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
-  <!-- Header -->
+  <!-- Header (Clean & Minimal with only Language Switcher) -->
   <header class="p-4 border-b border-slate-800 flex justify-between items-center max-w-4xl mx-auto w-full">
     <div class="flex items-center gap-3">
       <img src="https://cdn-icons-png.flaticon.com/512/2092/2092663.png" class="w-9 h-9" alt="Logo">
       <h1 class="text-xl font-bold tracking-wide text-emerald-400">SOCIAL GUARD</h1>
     </div>
-    <div class="flex gap-2 items-center">
+    <div>
       <!-- Language Switcher Button -->
-      <button id="langBtn" onclick="toggleLanguage()" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 text-xs px-2.5 py-1.5 rounded-lg border border-slate-700 font-semibold transition cursor-pointer">
+      <button id="langBtn" onclick="toggleLanguage()" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 text-xs px-3 py-2 rounded-lg border border-slate-700 font-semibold transition cursor-pointer shadow">
         English
-      </button>
-      <button onclick="openModal('reportModal')" class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-2 rounded-lg font-semibold flex items-center gap-1 transition cursor-pointer">
-        <i class="fa-solid fa-triangle-exclamation"></i> <span id="navReportText">रिपोर्ट गर्नुहोस्</span>
-      </button>
-      <button onclick="openModal('feedbackModal')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs px-3 py-2 rounded-lg border border-slate-700 flex items-center gap-1 cursor-pointer">
-        <i class="fa-solid fa-star text-amber-400"></i> <span id="navFeedbackText">फिडब्याक</span>
       </button>
     </div>
   </header>
@@ -119,7 +113,7 @@
         <div class="glass-card p-4 rounded-xl border-l-4 border-l-amber-500 space-y-1">
           <span id="alert2Badge" class="bg-amber-500/20 text-amber-400 text-xs px-2 py-0.5 rounded font-bold">सावधान</span>
           <h4 id="alert2Title" class="font-bold text-slate-200 text-sm">टेलिग्राम पार्ट-टाइम जब / लाइक-एण्ड-अर्न स्क्याम</h4>
-          <p id="alert2Body" class="text-xs text-slate-400">युट्युब भिडियो लाइक गरेर दैनिक रु ३००० कमाउनुहोस् भन्ने म्यासेजहरूबाट सचेत रहनुहोस्।</p>
+          <p id="alert2Body" class="text-xs text-slate-400">युट्युब भिडियो लाइक गरेर दैनिक रु ३ कमाउनुहोस् भन्ने म्यासेजहरूबाट सचेत रहनुहोस्।</p>
         </div>
       </div>
     </div>
@@ -380,8 +374,6 @@
         window.currentLang = 'en';
         btn.innerText = 'नेपाली';
         
-        document.getElementById('navReportText').innerText = 'Report';
-        document.getElementById('navFeedbackText').innerText = 'Feedback';
         document.getElementById('mainTitle').innerText = 'Verify Suspicious Links & Phone Numbers';
         document.getElementById('mainSubtitle').innerText = 'Stay safe from online scams, phishing, and fraud globally.';
         
@@ -442,8 +434,6 @@
         window.currentLang = 'ne';
         btn.innerText = 'English';
         
-        document.getElementById('navReportText').innerText = 'रिपोर्ट गर्नुहोस्';
-        document.getElementById('navFeedbackText').innerText = 'फिडब्याक';
         document.getElementById('mainTitle').innerText = 'शंकास्पद लिङ्क तथा नम्बर जाँच गर्नुहोस्';
         document.getElementById('mainSubtitle').innerText = 'विश्वभर भइरहेका अनलाइन ठगी, फिसिङ र स्क्यामबाट सुरक्षित रहनुहोस्।';
         
