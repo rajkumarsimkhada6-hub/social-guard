@@ -33,7 +33,11 @@
       <img src="https://cdn-icons-png.flaticon.com/512/2092/2092663.png" class="w-9 h-9" alt="Logo">
       <h1 class="text-xl font-bold tracking-wide text-emerald-400">SOCIAL GUARD</h1>
     </div>
-    <div class="flex gap-2">
+    <div class="flex gap-2 items-center">
+      <!-- Language Switcher Button -->
+      <button id="langBtn" onclick="toggleLanguage()" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 text-xs px-2.5 py-1.5 rounded-lg border border-slate-700 font-semibold transition">
+        English
+      </button>
       <button onclick="openModal('reportModal')" class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-2 rounded-lg font-semibold flex items-center gap-1 transition">
         <i class="fa-solid fa-triangle-exclamation"></i> रिपोर्ट गर्नुहोस्
       </button>
@@ -48,25 +52,25 @@
     
     <!-- Title Section -->
     <div class="text-center space-y-2 my-2">
-      <h2 class="text-2xl md:text-3xl font-extrabold text-white">शंकास्पद लिङ्क तथा नम्बर जाँच गर्नुहोस्</h2>
-      <p class="text-slate-400 text-sm">नेपालमा भइरहेका अनलाइन ठगी र स्क्यामबाट सुरक्षित रहनुहोस्।</p>
+      <h2 id="mainTitle" class="text-2xl md:text-3xl font-extrabold text-white">शंकास्पद लिङ्क तथा नम्बर जाँच गर्नुहोस्</h2>
+      <p id="mainSubtitle" class="text-slate-400 text-sm">नेपालमा भइरहेका अनलाइन ठगी र स्क्यामबाट सुरक्षित रहनुहोस्।</p>
     </div>
 
-    <!-- Stats Counter Boxes (Clicked to Open Lists) -->
+    <!-- Stats Counter Boxes -->
     <div class="grid grid-cols-2 gap-4">
       <div onclick="openModal('checkedListModal')" class="glass-card p-4 rounded-2xl text-center cursor-pointer hover:border-emerald-500/50 transition shadow-lg">
-        <div class="text-xs text-slate-400 font-medium">जाँच गरिएका लिङ्क</div>
+        <div id="statCheckedLabel" class="text-xs text-slate-400 font-medium">जाँच गरिएका लिङ्क</div>
         <div class="text-2xl font-extrabold text-emerald-400 mt-1">१,२८५+</div>
       </div>
       <div onclick="openModal('scamListModal')" class="glass-card p-4 rounded-2xl text-center cursor-pointer hover:border-red-500/50 transition shadow-lg">
-        <div class="text-xs text-slate-400 font-medium">रोकिएका स्क्याम</div>
+        <div id="statBlockedLabel" class="text-xs text-slate-400 font-medium">रोकिएका स्क्याम</div>
         <div class="text-2xl font-extrabold text-red-400 mt-1">४५२+</div>
       </div>
     </div>
 
     <!-- Search / Scanner Box -->
     <div class="glass-card p-5 rounded-2xl shadow-xl space-y-4">
-      <label class="text-sm font-semibold text-emerald-400 flex items-center gap-2">
+      <label id="inputLabel" class="text-sm font-semibold text-emerald-400 flex items-center gap-2">
         <i class="fa-solid fa-magnifying-glass"></i> लिङ्क, म्यासेज वा फोन नम्बर हाल्नुहोस्
       </label>
       <div class="relative">
@@ -89,11 +93,11 @@
       <!-- Result Area -->
       <div id="resultBox" class="hidden p-4 rounded-xl text-sm"></div>
 
-      <!-- Permanently Visible Disclaimer Note -->
+      <!-- Clean Disclaimer Note -->
       <div class="p-3 bg-slate-900/60 border border-slate-800 rounded-xl text-[11px] text-slate-400 leading-relaxed flex items-start gap-2">
         <i class="fa-solid fa-shield-halved text-amber-400 text-sm mt-0.5"></i>
         <div>
-          <strong class="text-slate-300">सुरक्षा सचेतना नोट:</strong> कुनै पनि लिङ्कलाई १००% सुरक्षित मान्न सकिँदैन। यदि कुनै लिङ्क वा वेबसाइटले फोनको एड्मिन पर्मिसन, कल, फोटो, कन्ट्याक्ट वा व्यक्तिगत विवरण माग्छ भने तुरुन्त बन्द गर्नुहोस् र आफ्नो सुरक्षा आफैँ मिलाउनुहोस्[span_2](start_span)[span_2](end_span)।
+          <strong class="text-slate-300">सुरक्षा सचेतना नोट:</strong> कुनै पनि लिङ्कलाई १००% सुरक्षित मान्न सकिँदैन। यदि कुनै लिङ्क वा वेबसाइटले फोनको एड्मिन पर्मिसन, कल, फोटो, कन्ट्याक्ट वा व्यक्तिगत विवरण माग्छ भने तुरुन्त बन्द गर्नुहोस् र आफ्नो सुरक्षा आफैँ मिलाउनुहोस्।
         </div>
       </div>
     </div>
@@ -119,7 +123,37 @@
         <div class="glass-card p-4 rounded-xl border-l-4 border-l-amber-500 space-y-1">
           <span class="bg-amber-500/20 text-amber-400 text-xs px-2 py-0.5 rounded font-bold">सावधान</span>
           <h4 class="font-bold text-slate-200 text-sm">टेलिग्राम पार्ट-टाइम जब / लाइक-एण्ड-अर्न स्क्याम</h4>
-          <p class="text-xs text-slate-400">युट्युब भिडियो लाइक गरेर दैनिक रु ३ कमाउनुहोस् भन्ने म्यासेजहरूबाट सचेत रहनुहोस्।</p>
+          <p class="text-xs text-slate-400">युट्युब भिडियो लाइक गरेर दैनिक रु ३००० कमाउनुहोस् भन्ने म्यासेजहरूबाट सचेत रहनुहोस्।</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESTORED: Scam Links & Numbers List Section -->
+    <div class="glass-card p-5 rounded-2xl space-y-3">
+      <div class="flex justify-between items-center">
+        <h3 id="scamListHeader" class="text-base font-bold text-red-400 flex items-center gap-2">
+          <i class="fa-solid fa-database"></i> स्क्याम लिङ्क र नम्बर सूची
+        </h3>
+        <button onclick="openModal('scamListModal')" class="text-emerald-400 hover:underline text-xs font-semibold">
+          View More (सबै हेर्नुहोस्)
+        </button>
+      </div>
+
+      <div class="space-y-2">
+        <div class="bg-slate-900/80 p-3 rounded-xl flex justify-between items-center text-xs">
+          <div class="flex items-center gap-2">
+            <span class="bg-red-500/20 text-red-400 font-bold px-2 py-0.5 rounded">[NUMBER]</span>
+            <span class="text-slate-200 font-mono">+977 9801234567</span>
+          </div>
+          <span class="bg-red-900/40 text-red-300 px-2 py-0.5 rounded text-[10px]">WhatsApp Lottery</span>
+        </div>
+
+        <div class="bg-slate-900/80 p-3 rounded-xl flex justify-between items-center text-xs">
+          <div class="flex items-center gap-2">
+            <span class="bg-red-500/20 text-red-400 font-bold px-2 py-0.5 rounded">[LINK]</span>
+            <span class="text-slate-200 font-mono">ncell-free-bonus.tk</span>
+          </div>
+          <span class="bg-red-900/40 text-red-300 px-2 py-0.5 rounded text-[10px]">Phishing</span>
         </div>
       </div>
     </div>
@@ -150,7 +184,7 @@
     <p>© 2026 SOCIAL GUARD. All rights reserved.</p>
   </footer>
 
-  <!-- MODAL 1: Checked Links List (1,285+) -->
+  <!-- MODAL 1: Checked Links List -->
   <div id="checkedListModal" class="fixed inset-0 bg-black/80 hidden backdrop-blur-sm flex items-center justify-center p-4 z-50">
     <div class="glass-card max-w-lg w-full p-6 rounded-2xl space-y-4 max-h-[80vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b border-slate-700 pb-3">
@@ -180,7 +214,7 @@
     </div>
   </div>
 
-  <!-- MODAL 2: Blocked Scams List (452+) -->
+  <!-- MODAL 2: Blocked Scams List -->
   <div id="scamListModal" class="fixed inset-0 bg-black/80 hidden backdrop-blur-sm flex items-center justify-center p-4 z-50">
     <div class="glass-card max-w-lg w-full p-6 rounded-2xl space-y-4 max-h-[80vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b border-slate-700 pb-3">
@@ -300,83 +334,4 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    document.getElementById('feedbackForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const rating = Number(document.getElementById('ratingSelect').value);
-      const comment = document.getElementById('feedbackComment').value;
-
-      try {
-        await addDoc(collection(db, "feedbacks"), {
-          rating: rating,
-          comment: comment,
-          timestamp: serverTimestamp()
-        });
-        alert("तपाईंको प्रतिक्रिया प्राप्त भयो। धन्यवाद!");
-        closeModal('feedbackModal');
-        document.getElementById('feedbackForm').reset();
-      } catch (error) {
-        alert("त्रुटि: " + error.message);
-      }
-    });
-
-    document.getElementById('scamReportForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const target = document.getElementById('reportTarget').value;
-      const details = document.getElementById('reportDetails').value;
-
-      try {
-        await addDoc(collection(db, "scams"), {
-          target: target,
-          details: details,
-          status: "pending",
-          timestamp: serverTimestamp()
-        });
-        alert("स्क्याम सफलतापुर्वक रिपोर्ट भयो। सुरक्षा टोलीले यसको जाँच गर्नेछ!");
-        closeModal('reportModal');
-        document.getElementById('scamReportForm').reset();
-      } catch (error) {
-        alert("त्रुटि: " + error.message);
-      }
-    });
-  </script>
-
-  <!-- Interactive Logic -->
-  <script>
-    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
-    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
-    function clearInput() { document.getElementById('userInput').value = ''; }
-
-    async function pasteFromClipboard() {
-      try {
-        const text = await navigator.clipboard.readText();
-        document.getElementById('userInput').value = text;
-      } catch (err) {
-        alert("क्लिपबोर्डबाट पेस्ट गर्न अनुमति मिलेन।");
-      }
-    }
-
-    function analyzeRisk() {
-      const val = document.getElementById('userInput').value.trim();
-      const res = document.getElementById('resultBox');
-      
-      if (!val) {
-        alert("कृपया कुनै लिङ्क वा नम्बर हाल्नुहोस्!");
-        return;
-      }
-
-      res.classList.remove('hidden', 'bg-red-500/20', 'text-red-400', 'bg-emerald-500/20', 'text-emerald-400', 'border-red-500', 'border-emerald-500');
-      
-      if (val.includes("free") || val.includes("bit.ly") || val.includes("gift") || val.includes("win") || val.includes("lottery")) {
-        res.className = "p-4 rounded-xl text-sm font-semibold border bg-red-500/20 text-red-400 border-red-500/40";
-        res.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-2"></i> 🚨 <strong>उच्च जोखिम (High Scam Risk)!</strong> यो लिङ्क वा नम्बर असुरक्षित/ठगी नियतको हुन सक्छ। सावधान रहनुहोस्।`;
-      } else {
-        res.className = "p-4 rounded-xl text-sm border bg-emerald-500/20 text-emerald-400 border-emerald-500/40 space-y-1";
-        res.innerHTML = `<div><i class="fa-solid fa-circle-check mr-2"></i> ✅ <strong>सामान्य सुरक्षित (Low Risk):</strong> कुनै प्रत्यक्ष ठगीका संकेतहरू भेटिएनन्।</div>
-                         <div class="text-[11px] text-slate-300 font-normal mt-1 border-t border-emerald-500/20 pt-1">
-                           ⚠️ <em>नोट: कुनै पनि लिङ्क १००% सुरक्षित हुँदैन। यदि यस लिङ्कले फोनको एड्मिन पर्मिसन, कल, फोटो वा व्यक्तिगत विवरण मागेमा आफ्नै सतर्कता अपनाउनुहोला[span_3](start_span)[span_3](end_span)।</em>
-                         </div>`;
-      }
-    }
-  </script>
-</body>
-</html>
+    document.getElementById('feedbackForm').addEventListener('submit', async (e
