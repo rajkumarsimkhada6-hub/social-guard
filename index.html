@@ -66,7 +66,7 @@
                 <i class="fa-solid fa-bell text-amber-400 animate-pulse"></i> हाल चलिरहेका स्क्याम सचेतना (Scam Alerts)
             </h3>
             
-            <div class="space-y-3" id="alertsList">
+            <div class="space-y-3">
                 <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-700/80 text-xs text-slate-300">
                     <span class="inline-block bg-red-900/60 text-red-300 px-2 py-0.5 rounded text-[10px] font-semibold mb-1" id="tag1">ताजा चेतावनी</span>
                     <p class="font-medium text-slate-100" id="alert1Title">नेपाल टेलिकम / एनसेल नि:शुल्क टपअप/डाटा प्याक स्क्याम</p>
@@ -78,11 +78,34 @@
                     <p class="font-medium text-slate-100" id="alert2Title">टेलिग्राम पार्ट-टाइम जब / लाइक-एण्ड-अर्न स्क्याम</p>
                     <p class="text-slate-400 mt-0.5" id="alert2Desc">युट्युब भिडियो लाइक गरेर दैनिक रू. ३००० कमाउनुहोस् भन्ने म्यासेजबाट सचेत रहनुहोस्।</p>
                 </div>
+            </div>
+        </div>
 
-                <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-700/80 text-xs text-slate-300">
-                    <span class="inline-block bg-amber-900/60 text-amber-300 px-2 py-0.5 rounded text-[10px] font-semibold mb-1" id="tag3">सावधान</span>
-                    <p class="font-medium text-slate-100" id="alert3Title">फेसबुक/ह्वाट्सएप लटरी र गिफ्ट कोड स्क्याम</p>
-                    <p class="text-slate-400 mt-0.5" id="alert3Desc">अज्ञात व्यक्तिले पठाएको "तपाईंले लटरी जित्नुभयो, ट्याक्स तिर्नुहोस्" भन्ने म्यासेज पूर्णतया नक्कली हो।</p>
+        <!-- Blacklisted Scam Links & Numbers (Summary) -->
+        <div class="bg-slate-800 p-6 rounded-2xl shadow-xl border border-slate-700">
+            <div class="flex items-center justify-between mb-3">
+                <h3 id="dbTitle" class="text-md font-semibold text-red-400 flex items-center gap-2">
+                    <i class="fa-solid fa-database"></i> स्क्याम लिङ्क र नम्बर सूची
+                </h3>
+                <button onclick="openModal()" id="viewMoreBtn" class="text-xs text-emerald-400 hover:text-emerald-300 underline font-medium">
+                    View More (सबै हेर्नुहोस्)
+                </button>
+            </div>
+
+            <div class="space-y-2 text-xs">
+                <div class="p-2.5 rounded-lg bg-slate-900 border border-slate-700/70 flex justify-between items-center">
+                    <div>
+                        <span class="text-red-400 font-mono font-bold">[NUMBER]</span>
+                        <span class="text-slate-200 ml-1">+977 98012XXXXX</span>
+                    </div>
+                    <span class="text-[10px] bg-red-950 text-red-300 px-1.5 py-0.5 rounded">WhatsApp Lottery</span>
+                </div>
+                <div class="p-2.5 rounded-lg bg-slate-900 border border-slate-700/70 flex justify-between items-center">
+                    <div>
+                        <span class="text-red-400 font-mono font-bold">[LINK]</span>
+                        <span class="text-slate-200 ml-1">ncell-free-bonus.tk</span>
+                    </div>
+                    <span class="text-[10px] bg-red-950 text-red-300 px-1.5 py-0.5 rounded">Phishing</span>
                 </div>
             </div>
         </div>
@@ -100,12 +123,77 @@
 
     </main>
 
+    <!-- Modal Window for View More -->
+    <div id="scamModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-800 border border-slate-700 rounded-2xl max-w-lg w-full p-5 max-h-[85vh] flex flex-col shadow-2xl">
+            <div class="flex justify-between items-center mb-4 border-b border-slate-700 pb-3">
+                <h3 id="modalHeaderTitle" class="text-md font-bold text-red-400 flex items-center gap-2">
+                    <i class="fa-solid fa-triangle-exclamation"></i> रिपोर्ट गरिएका स्क्याम लिङ्क तथा नम्बरहरू
+                </h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-white text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Search Bar inside Modal -->
+            <div class="mb-3">
+                <input type="text" id="dbSearch" onkeyup="filterDatabase()" placeholder="नम्बर वा लिङ्क खोज्नुहोस्..." 
+                class="w-full p-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-emerald-500">
+            </div>
+
+            <!-- Full List -->
+            <div class="overflow-y-auto space-y-2 flex-1 pr-1 text-xs" id="fullScamList">
+                <div class="p-3 rounded-xl bg-slate-900 border border-slate-700 flex justify-between items-center scam-item">
+                    <div>
+                        <span class="text-red-400 font-mono font-bold block sm:inline">[NUMBER]</span>
+                        <span class="text-slate-200 font-mono">+977 98012XXXXX</span>
+                        <p class="text-[11px] text-slate-400">लटरी परेको भन्दै ट्याक्स रकम माग्ने फोन नम्बर</p>
+                    </div>
+                    <span class="text-[10px] bg-red-950 border border-red-700 text-red-300 px-2 py-1 rounded-lg">Lottery Scam</span>
+                </div>
+
+                <div class="p-3 rounded-xl bg-slate-900 border border-slate-700 flex justify-between items-center scam-item">
+                    <div>
+                        <span class="text-red-400 font-mono font-bold block sm:inline">[LINK]</span>
+                        <span class="text-slate-200 font-mono">ncell-free-bonus.tk</span>
+                        <p class="text-[11px] text-slate-400">फ्रि टपअप पाइने भनेर पठाइने नक्कली लिङ्क</p>
+                    </div>
+                    <span class="text-[10px] bg-red-950 border border-red-700 text-red-300 px-2 py-1 rounded-lg">Phishing</span>
+                </div>
+
+                <div class="p-3 rounded-xl bg-slate-900 border border-slate-700 flex justify-between items-center scam-item">
+                    <div>
+                        <span class="text-red-400 font-mono font-bold block sm:inline">[NUMBER]</span>
+                        <span class="text-slate-200 font-mono">+91 9834XXXXXX</span>
+                        <p class="text-[11px] text-slate-400">पार्ट-टाइम जबको नाममा ह्वाट्सएपमा ठगी गर्ने नम्बर</p>
+                    </div>
+                    <span class="text-[10px] bg-red-950 border border-red-700 text-red-300 px-2 py-1 rounded-lg">Job Scam</span>
+                </div>
+
+                <div class="p-3 rounded-xl bg-slate-900 border border-slate-700 flex justify-between items-center scam-item">
+                    <div>
+                        <span class="text-red-400 font-mono font-bold block sm:inline">[LINK]</span>
+                        <span class="text-slate-200 font-mono">claim-facebook-prize.xyz</span>
+                        <p class="text-[11px] text-slate-400">फेसबुक आइडी लगइन गराएर ह्याक गर्ने लिङ्क</p>
+                    </div>
+                    <span class="text-[10px] bg-red-950 border border-red-700 text-red-300 px-2 py-1 rounded-lg">Credential Theft</span>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-700 text-center">
+                <button onclick="closeModal()" class="w-full bg-slate-700 hover:bg-slate-600 text-white font-medium py-2 rounded-xl text-xs transition">
+                    बन्द गर्नुहोस् (Close)
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="text-center py-4 text-xs text-slate-500 border-t border-slate-800">
         &copy; 2026 SOCIAL GUARD. All rights reserved.
     </footer>
 
-    <!-- JavaScript for Verification, Quick Actions & Multi-Language -->
+    <!-- JavaScript for Verification, Quick Actions, Modal & Language -->
     <script>
     let currentLang = 'np';
 
@@ -124,12 +212,13 @@
             tag2: "सावधान",
             alert2Title: "टेलिग्राम पार्ट-टाइम जब / लाइक-एण्ड-अर्न स्क्याम",
             alert2Desc: "युट्युब भिडियो लाइक गरेर दैनिक रू. ३००० कमाउनुहोस् भन्ने म्यासेजबाट सचेत रहनुहोस्।",
-            tag3: "सावधान",
-            alert3Title: "फेसबुक/ह्वाट्सएप लटरी र गिफ्ट कोड स्क्याम",
-            alert3Desc: 'अज्ञात व्यक्तिले पठाएको "तपाईंले लटरी जित्नुभयो, ट्याक्स तिर्नुहोस्" भन्ने म्यासेज पूर्णतया नक्कली हो।',
+            dbTitle: '<i class="fa-solid fa-database"></i> स्क्याम लिङ्क र नम्बर सूची',
+            viewMoreBtn: "View More (सबै हेर्नुहोस्)",
             reportTitle: "के तपाईँले नयाँ स्क्याम वा शंकास्पद गतिविधि फेला पार्नुभयो?",
             reportSub: "अन्य प्रयोगकर्ताहरूलाई जोगाउन रिपोर्ट पठाउनुहोस्।",
             reportBtnText: "स्क्याम रिपोर्ट गर्नुहोस् (Report Scam)",
+            modalHeaderTitle: '<i class="fa-solid fa-triangle-exclamation"></i> रिपोर्ट गरिएका स्क्याम लिङ्क तथा नम्बरहरू',
+            dbSearchPlaceholder: "नम्बर वा लिङ्क खोज्नुहोस्...",
             alertEmpty: "कृपया पहिले लिङ्क वा म्यासेज हाल्नुहोस्!",
             alertClipboardErr: "क्लिपबोर्डबाट म्यासेज पढ्न अनुमति छैन। कृपया हाथले नै पेस्ट गर्नुहोस्।"
         },
@@ -146,4 +235,145 @@
             alert1Desc: 'Do not click links claiming "Get 50GB Free Data" on social media.',
             tag2: "WARNING",
             alert2Title: "Telegram Part-Time Job / Like-and-Earn Scam",
-            alert2Desc: 'Beware of messages offering "
+            alert2Desc: 'Beware of messages offering "Earn Rs. 3000 daily by liking YouTube videos".',
+            dbTitle: '<i class="fa-solid fa-database"></i> Scam Database',
+            viewMoreBtn: "View All (Full List)",
+            reportTitle: "Did you find a new scam or suspicious activity?",
+            reportSub: "Send a report to protect other users.",
+            reportBtnText: "Report Scam",
+            modalHeaderTitle: '<i class="fa-solid fa-triangle-exclamation"></i> Reported Scam Links & Numbers',
+            dbSearchPlaceholder: "Search number or link...",
+            alertEmpty: "Please enter a link or message first!",
+            alertClipboardErr: "Clipboard access denied. Please paste manually."
+        }
+    };
+
+    function toggleLanguage() {
+        currentLang = currentLang === 'np' ? 'en' : 'np';
+        const t = translations[currentLang];
+
+        document.getElementById('langBtn').innerText = t.langBtn;
+        document.getElementById('subHeader').innerText = t.subHeader;
+        document.getElementById('checkTitle').innerHTML = t.checkTitle;
+        document.getElementById('linkInput').placeholder = t.inputPlaceholder;
+        document.getElementById('pasteBtn').innerHTML = t.pasteBtn;
+        document.getElementById('verifyBtn').innerHTML = t.verifyBtn;
+        document.getElementById('alertTitle').innerHTML = t.alertTitle;
+        document.getElementById('tag1').innerText = t.tag1;
+        document.getElementById('alert1Title').innerText = t.alert1Title;
+        document.getElementById('alert1Desc').innerText = t.alert1Desc;
+        document.getElementById('tag2').innerText = t.tag2;
+        document.getElementById('alert2Title').innerText = t.alert2Title;
+        document.getElementById('alert2Desc').innerText = t.alert2Desc;
+        document.getElementById('dbTitle').innerHTML = t.dbTitle;
+        document.getElementById('viewMoreBtn').innerText = t.viewMoreBtn;
+        document.getElementById('reportTitle').innerText = t.reportTitle;
+        document.getElementById('reportSub').innerText = t.reportSub;
+        document.getElementById('reportBtnText').innerText = t.reportBtnText;
+        document.getElementById('modalHeaderTitle').innerHTML = t.modalHeaderTitle;
+        document.getElementById('dbSearch').placeholder = t.dbSearchPlaceholder;
+        
+        document.getElementById('resultBox').classList.add('hidden');
+    }
+
+    function openModal() {
+        document.getElementById('scamModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+        document.getElementById('scamModal').classList.add('hidden');
+    }
+
+    function filterDatabase() {
+        const query = document.getElementById('dbSearch').value.toLowerCase();
+        const items = document.querySelectorAll('.scam-item');
+
+        items.forEach(item => {
+            const text = item.innerText.toLowerCase();
+            if (text.includes(query)) {
+                item.style.display = "flex";
+            } else {
+                item.style.display = "none";
+            }
+        });
+    }
+
+    async function pasteLink() {
+        try {
+            const text = await navigator.clipboard.readText();
+            document.getElementById('linkInput').value = text;
+        } catch (err) {
+            alert(translations[currentLang].alertClipboardErr);
+        }
+    }
+
+    function clearInput() {
+        document.getElementById('linkInput').value = '';
+        document.getElementById('resultBox').classList.add('hidden');
+    }
+
+    function checkLink() {
+        const input = document.getElementById('linkInput').value.trim();
+        const resultBox = document.getElementById('resultBox');
+
+        if (!input) {
+            alert(translations[currentLang].alertEmpty);
+            return;
+        }
+
+        const inputLower = input.toLowerCase();
+
+        const dangerousPatterns = [
+            ".tk", ".ml", ".ga", ".cf", ".gq", ".xyz", ".top", ".club",
+            "free-recharge", "lottery", "facebook-login", "claim-prize", 
+            "bank-update", "offer-bonus", "telegram-group", "win-cash"
+        ];
+
+        const shortenerPatterns = ["bit.ly", "tinyurl.com", "goo.gl", "is.gd", "buff.ly", "t.co"];
+
+        const isDangerous = dangerousPatterns.some(pattern => inputLower.includes(pattern));
+        const isShortener = shortenerPatterns.some(pattern => inputLower.includes(pattern));
+
+        resultBox.classList.remove('hidden', 'bg-red-950', 'border-red-600', 'text-red-200', 'bg-emerald-950', 'border-emerald-600', 'text-emerald-200', 'bg-amber-950', 'border-amber-600', 'text-amber-200');
+
+        if (isDangerous) {
+            resultBox.classList.add('bg-red-950', 'border-red-600', 'text-red-200');
+            resultBox.innerHTML = currentLang === 'np' ? `
+                <strong>🚨 चेतावनी: यो शंकास्पद लिङ्क हुन सक्छ!</strong><br>
+                यस्ता लिङ्कमा व्यक्तिगत जानकारी, पासवर्ड वा OTP हाल्ने नगर्नुहोस्।
+            ` : `
+                <strong>🚨 High Risk / Scam Link Detected!</strong><br>
+                Do not share personal details, passwords, or OTPs on this link.
+            `;
+        } else if (isShortener) {
+            resultBox.classList.add('bg-amber-950', 'border-amber-600', 'text-amber-200');
+            resultBox.innerHTML = currentLang === 'np' ? `
+                <strong>⚠️ सावधानी अपनाउनुहोस्!</strong><br>
+                यो सर्ट लिङ्क (Shortened URL) हो। यसले सक्कली वेबसाइट लुकाएको हुन सक्छ।
+            ` : `
+                <strong>⚠️ Warning: Shortened Link Detected!</strong><br>
+                This link uses a shortener which might hide the real destination.
+            `;
+        } else if (inputLower.includes("http://") || inputLower.includes("https://")) {
+            resultBox.classList.add('bg-emerald-950', 'border-emerald-600', 'text-emerald-200');
+            resultBox.innerHTML = currentLang === 'np' ? `
+                <strong>✅ सुरक्षित जस्तो देखिन्छ</strong><br>
+                यद्यपि अज्ञात स्रोतबाट आएका मेसेज वा लिङ्कहरू खोल्दा सधैँ सचेत रहनुहोस्।
+            ` : `
+                <strong>✅ Looks Relatively Safe</strong><br>
+                Always stay cautious when opening links from unknown senders.
+            `;
+        } else {
+            resultBox.classList.add('bg-slate-800', 'border-slate-600', 'text-slate-200');
+            resultBox.innerHTML = currentLang === 'np' ? `
+                <strong>ℹ️ जानकारी:</strong><br>
+                कृपया सही लिङ्क (उदा: https://...) हालेर फेरि जाँच गर्नुहोस्।
+            ` : `
+                <strong>ℹ️ Info:</strong><br>
+                Please enter a valid link (e.g., https://...) and try again.
+            `;
+        }
+    }
+    </script>
+</body>
+</html>
