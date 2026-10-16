@@ -7,6 +7,11 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .glow-effect {
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
+        }
+    </style>
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between font-sans">
 
@@ -14,7 +19,7 @@
     <header class="bg-slate-800 border-b border-slate-700 py-4 px-6 shadow-lg">
         <div class="max-w-lg mx-auto flex items-center justify-between">
             <div class="flex items-center gap-2">
-                <i class="fa-solid fa-shield-halved text-emerald-400 text-2xl sm:text-3xl"></i>
+                <i class="fa-solid fa-shield-halved text-emerald-400 text-2xl sm:text-3xl animate-pulse"></i>
                 <h1 class="text-xl sm:text-2xl font-bold tracking-wide text-white">SOCIAL GUARD</h1>
             </div>
             <!-- Language Switcher Button -->
@@ -22,20 +27,32 @@
                 English
             </button>
         </div>
-        <p id="subHeader" class="text-xs text-slate-400 mt-2 text-center">शंकास्पद लिङ्क जाँच गर्नुहोस् र स्क्याम रिपोर्ट गर्नुहोस्</p>
+        <p id="subHeader" class="text-xs text-slate-400 mt-2 text-center">शंकास्पद लिङ्क तथा नम्बर जाँच गर्नुहोस् र स्क्यामबाट बच्नुहोस्</p>
     </header>
 
     <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8 max-w-lg flex-1 space-y-6">
+    <main class="container mx-auto px-4 py-6 max-w-lg flex-1 space-y-6">
         
-        <!-- Link Checker Card -->
-        <div class="bg-slate-800 p-6 rounded-2xl shadow-xl border border-slate-700">
+        <!-- Live Stats Counter Card -->
+        <div class="grid grid-cols-2 gap-3 text-center">
+            <div class="bg-slate-800/90 p-3 rounded-2xl border border-slate-700/80 shadow-md">
+                <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider" id="statCheckedLabel">जाँच गरिएका लिङ्क</p>
+                <p class="text-xl font-extrabold text-emerald-400 mt-0.5" id="statCheckedCount">१,२४८+</p>
+            </div>
+            <div class="bg-slate-800/90 p-3 rounded-2xl border border-slate-700/80 shadow-md">
+                <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider" id="statBlockedLabel">रोकिएका स्क्याम</p>
+                <p class="text-xl font-extrabold text-red-400 mt-0.5" id="statBlockedCount">४५२+</p>
+            </div>
+        </div>
+
+        <!-- Link & Phone Checker Card -->
+        <div class="bg-slate-800 p-6 rounded-2xl shadow-xl border border-slate-700 glow-effect">
             <h2 id="checkTitle" class="text-lg font-semibold mb-4 flex items-center gap-2 text-emerald-400">
-                <i class="fa-solid fa-magnifying-glass"></i> लिङ्क जाँच गर्नुहोस् (Check Link)
+                <i class="fa-solid fa-magnifying-glass"></i> लिङ्क वा नम्बर जाँच गर्नुहोस्
             </h2>
             <div class="space-y-4">
                 <div class="relative">
-                    <input type="text" id="linkInput" placeholder="यहाँ लिङ्क वा म्यासेज पेस्ट गर्नुहोस्..." 
+                    <input type="text" id="linkInput" placeholder="यहाँ लिङ्क, म्यासेज वा फोन नम्बर हाल्नुहोस्..." 
                     class="w-full p-3 pr-10 rounded-xl bg-slate-900 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 text-sm">
                     <!-- Clear Button -->
                     <button onclick="clearInput()" type="button" class="absolute right-3 top-3 text-slate-400 hover:text-white text-sm">
@@ -57,7 +74,7 @@
             </div>
 
             <!-- Result Box -->
-            <div id="resultBox" class="mt-5 hidden p-4 rounded-xl text-sm border space-y-2"></div>
+            <div id="resultBox" class="mt-5 hidden p-4 rounded-xl text-sm border space-y-3"></div>
         </div>
 
         <!-- Live Scam Alerts / Notice Board -->
@@ -96,7 +113,7 @@
                 <div class="p-2.5 rounded-lg bg-slate-900 border border-slate-700/70 flex justify-between items-center">
                     <div>
                         <span class="text-red-400 font-mono font-bold">[NUMBER]</span>
-                        <span class="text-slate-200 ml-1">+977 98012XXXXX</span>
+                        <span class="text-slate-200 ml-1">+977 9801234567</span>
                     </div>
                     <span class="text-[10px] bg-red-950 text-red-300 px-1.5 py-0.5 rounded">WhatsApp Lottery</span>
                 </div>
@@ -146,7 +163,7 @@
                 <div class="p-3 rounded-xl bg-slate-900 border border-slate-700 flex justify-between items-center scam-item">
                     <div>
                         <span class="text-red-400 font-mono font-bold block sm:inline">[NUMBER]</span>
-                        <span class="text-slate-200 font-mono">+977 98012XXXXX</span>
+                        <span class="text-slate-200 font-mono">+977 9801234567</span>
                         <p class="text-[11px] text-slate-400">लटरी परेको भन्दै ट्याक्स रकम माग्ने फोन नम्बर</p>
                     </div>
                     <span class="text-[10px] bg-red-950 border border-red-700 text-red-300 px-2 py-1 rounded-lg">Lottery Scam</span>
@@ -164,7 +181,7 @@
                 <div class="p-3 rounded-xl bg-slate-900 border border-slate-700 flex justify-between items-center scam-item">
                     <div>
                         <span class="text-red-400 font-mono font-bold block sm:inline">[NUMBER]</span>
-                        <span class="text-slate-200 font-mono">+91 9834XXXXXX</span>
+                        <span class="text-slate-200 font-mono">+91 9834567890</span>
                         <p class="text-[11px] text-slate-400">पार्ट-टाइम जबको नाममा ह्वाट्सएपमा ठगी गर्ने नम्बर</p>
                     </div>
                     <span class="text-[10px] bg-red-950 border border-red-700 text-red-300 px-2 py-1 rounded-lg">Job Scam</span>
@@ -193,16 +210,21 @@
         &copy; 2026 SOCIAL GUARD. All rights reserved.
     </footer>
 
-    <!-- JavaScript for Smart Auto-Analysis, Quick Actions, Modal & Language -->
+    <!-- JavaScript logic -->
     <script>
     let currentLang = 'np';
+    let lastCheckedInput = '';
+
+    const knownScamNumbers = ["9801234567", "+9779801234567", "9834567890", "+919834567890"];
 
     const translations = {
         np: {
             langBtn: "English",
-            subHeader: "शंकास्पद लिङ्क जाँच गर्नुहोस् र स्क्याम रिपोर्ट गर्नुहोस्",
-            checkTitle: '<i class="fa-solid fa-magnifying-glass"></i> लिङ्क जाँच गर्नुहोस् (Check Link)',
-            inputPlaceholder: "यहाँ लिङ्क वा म्यासेज पेस्ट गर्नुहोस्...",
+            subHeader: "शंकास्पद लिङ्क तथा नम्बर जाँच गर्नुहोस् र स्क्यामबाट बच्नुहोस्",
+            statCheckedLabel: "जाँच गरिएका लिङ्क",
+            statBlockedLabel: "रोकिएका स्क्याम",
+            checkTitle: '<i class="fa-solid fa-magnifying-glass"></i> लिङ्क वा नम्बर जाँच गर्नुहोस्',
+            inputPlaceholder: "यहाँ लिङ्क, म्यासेज वा फोन नम्बर हाल्नुहोस्...",
             pasteBtn: '<i class="fa-solid fa-paste"></i> पेस्ट गर्नुहोस्',
             verifyBtn: '<i class="fa-solid fa-microchip"></i> AI अटो विश्लेषण',
             alertTitle: '<i class="fa-solid fa-bell text-amber-400 animate-pulse"></i> हाल चलिरहेका स्क्याम सचेतना (Scam Alerts)',
@@ -219,14 +241,17 @@
             reportBtnText: "स्क्याम रिपोर्ट गर्नुहोस् (Report Scam)",
             modalHeaderTitle: '<i class="fa-solid fa-triangle-exclamation"></i> रिपोर्ट गरिएका स्क्याम लिङ्क तथा नम्बरहरू',
             dbSearchPlaceholder: "नम्बर वा लिङ्क खोज्नुहोस्...",
-            alertEmpty: "कृपया पहिले लिङ्क वा म्यासेज हाल्नुहोस्!",
-            alertClipboardErr: "क्लिपबोर्डबाट म्यासेज पढ्न अनुमति छैन। कृपया हाथले नै पेस्ट गर्नुहोस्।"
+            alertEmpty: "कृपया पहिले लिङ्क वा फोन नम्बर हाल्नुहोस्!",
+            alertClipboardErr: "क्लिपबोर्डबाट पढ्न अनुमति छैन। कृपया हाथले पेस्ट गर्नुहोस्।",
+            shareBtn: '<i class="fa-brands fa-whatsapp text-lg"></i> साथीहरूलाई सावधान गराउनुहोस् (Share Alert)'
         },
         en: {
             langBtn: "नेपाली",
-            subHeader: "Verify suspicious links & report scams",
-            checkTitle: '<i class="fa-solid fa-magnifying-glass"></i> Check Link',
-            inputPlaceholder: "Paste link or message here...",
+            subHeader: "Verify suspicious links & numbers to avoid scams",
+            statCheckedLabel: "Links Checked",
+            statBlockedLabel: "Scams Blocked",
+            checkTitle: '<i class="fa-solid fa-magnifying-glass"></i> Check Link or Phone Number',
+            inputPlaceholder: "Paste link, message or phone number...",
             pasteBtn: '<i class="fa-solid fa-paste"></i> Paste',
             verifyBtn: '<i class="fa-solid fa-microchip"></i> AI Auto Analysis',
             alertTitle: '<i class="fa-solid fa-bell text-amber-400 animate-pulse"></i> Live Scam Alerts',
@@ -243,8 +268,9 @@
             reportBtnText: "Report Scam",
             modalHeaderTitle: '<i class="fa-solid fa-triangle-exclamation"></i> Reported Scam Links & Numbers',
             dbSearchPlaceholder: "Search number or link...",
-            alertEmpty: "Please enter a link or message first!",
-            alertClipboardErr: "Clipboard access denied. Please paste manually."
+            alertEmpty: "Please enter a link or phone number first!",
+            alertClipboardErr: "Clipboard access denied. Please paste manually.",
+            shareBtn: '<i class="fa-brands fa-whatsapp text-lg"></i> Share Danger Alert'
         }
     };
 
@@ -254,6 +280,8 @@
 
         document.getElementById('langBtn').innerText = t.langBtn;
         document.getElementById('subHeader').innerText = t.subHeader;
+        document.getElementById('statCheckedLabel').innerText = t.statCheckedLabel;
+        document.getElementById('statBlockedLabel').innerText = t.statBlockedLabel;
         document.getElementById('checkTitle').innerHTML = t.checkTitle;
         document.getElementById('linkInput').placeholder = t.inputPlaceholder;
         document.getElementById('pasteBtn').innerHTML = t.pasteBtn;
@@ -312,6 +340,15 @@
         document.getElementById('resultBox').classList.add('hidden');
     }
 
+    function shareAlert() {
+        const text = currentLang === 'np' 
+            ? `🚨 सावधान! मलाई यो शंकास्पद/स्क्याम लिङ्क वा नम्बर प्राप्त भएको छ: "${lastCheckedInput}" \n\nकृपया यसलाई नखोल्नुहोस् र यसमा कुनै विवरण नदिनुहोस्। यस्ता स्क्यामबाट बच्न SOCIAL GUARD एप प्रयोग गर्नुहोस्!`
+            : `🚨 WARNING! I found a suspicious scam link/number: "${lastCheckedInput}" \n\nDo not click or share details on this! Verify links using SOCIAL GUARD app.`;
+        
+        const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+        window.open(whatsappUrl, '_blank');
+    }
+
     function checkLink() {
         const input = document.getElementById('linkInput').value.trim();
         const resultBox = document.getElementById('resultBox');
@@ -321,21 +358,29 @@
             return;
         }
 
+        lastCheckedInput = input;
         const inputLower = input.toLowerCase();
         let riskScore = 0;
         let reasons = [];
 
-        // 1. High Risk TLDs & Suspicious Words
+        // Check if input is a phone number search
+        const cleanNumber = input.replace(/[^0-9+]/g, '');
+        const isNumberMatch = knownScamNumbers.some(num => cleanNumber.includes(num));
+
+        if (isNumberMatch) {
+            riskScore = 95;
+            reasons.push(currentLang === 'np' ? `ब्ल्याकलिस्ट गरिएको स्क्यामर फोन नम्बर` : `Blacklisted Scam Phone Number`);
+        }
+
+        // TLDs & Keywords
         const highRiskKeywords = [
             ".tk", ".ml", ".ga", ".cf", ".gq", ".xyz", ".top", ".club", ".vip",
             "free-recharge", "lottery", "facebook-login", "claim-prize", 
             "bank-update", "offer-bonus", "telegram-group", "win-cash", "earn-money", "free-gb"
         ];
 
-        // 2. Shorteners
         const shorteners = ["bit.ly", "tinyurl.com", "goo.gl", "is.gd", "buff.ly", "t.co"];
 
-        // Analyze input
         highRiskKeywords.forEach(kw => {
             if (inputLower.includes(kw)) {
                 riskScore += 40;
@@ -350,25 +395,28 @@
             }
         });
 
-        // Check if plain IP address is used
         const ipPattern = /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/;
         if (ipPattern.test(inputLower)) {
             riskScore += 35;
             reasons.push(currentLang === 'np' ? `अस्वाभाविक IP ठेगाना (Domain Name नभएको)` : `Raw IP address used instead of domain`);
         }
 
-        // Check HTTP vs HTTPS
         if (inputLower.startsWith("http://")) {
             riskScore += 15;
             reasons.push(currentLang === 'np' ? `असुरक्षित HTTP प्रोटोकल (SSL नभएको)` : `Insecure HTTP connection`);
         }
 
-        // Cap risk score at 99%
         riskScore = Math.min(riskScore, 99);
 
         resultBox.classList.remove('hidden', 'bg-red-950', 'border-red-600', 'text-red-200', 'bg-emerald-950', 'border-emerald-600', 'text-emerald-200', 'bg-amber-950', 'border-amber-600', 'text-amber-200');
 
         let reasonText = reasons.length > 0 ? `<ul class="list-disc list-inside mt-1 text-xs opacity-80">${reasons.map(r => `<li>${r}</li>`).join('')}</ul>` : '';
+
+        const shareBtnHtml = `
+            <button onclick="shareAlert()" class="mt-3 w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-3 rounded-xl text-xs flex items-center justify-center gap-2 shadow transition">
+                ${translations[currentLang].shareBtn}
+            </button>
+        `;
 
         if (riskScore >= 50) {
             resultBox.classList.add('bg-red-950', 'border-red-600', 'text-red-200');
@@ -377,8 +425,9 @@
                     <strong>🚨 उच्च जोखिम (High Risk Detected)</strong>
                     <span class="bg-red-800 text-white font-bold px-2 py-0.5 rounded text-xs">Risk: ${riskScore}%</span>
                 </div>
-                <p class="text-xs mt-1">${currentLang === 'np' ? 'यो अत्यन्त शंकास्पद देखिन्छ। यसमा ओटीपी, पासवर्ड वा व्यक्तिगत विवरण नदिनुहोस्!' : 'High risk scam link detected. Do not share OTPs or personal details!'}</p>
+                <p class="text-xs mt-1">${currentLang === 'np' ? 'यो अत्यन्त शंकास्पद देखिन्छ। यसमा ओटीपी, पासवर्ड वा रकम पठाउने नगर्नुहोस्!' : 'High risk scam link or number. Do not share OTPs or money!'}</p>
                 ${reasonText}
+                ${shareBtnHtml}
             `;
         } else if (riskScore > 0) {
             resultBox.classList.add('bg-amber-950', 'border-amber-600', 'text-amber-200');
@@ -387,23 +436,24 @@
                     <strong>⚠️ मध्यम जोखिम / सावधानी (Warning)</strong>
                     <span class="bg-amber-800 text-white font-bold px-2 py-0.5 rounded text-xs">Risk: ${riskScore}%</span>
                 </div>
-                <p class="text-xs mt-1">${currentLang === 'np' ? 'यो लिङ्कमा केही अस्वाभाविक संकेतहरू पाइएका छन्। सावधानी अपनाउनुहोस्।' : 'Some suspicious indicators found. Proceed with caution.'}</p>
+                <p class="text-xs mt-1">${currentLang === 'np' ? 'यो लिङ्क वा नम्बरमा केही अस्वाभाविक संकेतहरू छन्। सावधानी अपनाउनुहोस्।' : 'Some suspicious indicators found. Proceed with caution.'}</p>
                 ${reasonText}
+                ${shareBtnHtml}
             `;
-        } else if (inputLower.includes("https://")) {
+        } else if (inputLower.includes("https://") || cleanNumber.length >= 10) {
             resultBox.classList.add('bg-emerald-950', 'border-emerald-600', 'text-emerald-200');
             resultBox.innerHTML = `
                 <div class="flex justify-between items-center">
                     <strong>✅ सुरक्षित जस्तो देखिन्छ (Safe Pattern)</strong>
                     <span class="bg-emerald-800 text-white font-bold px-2 py-0.5 rounded text-xs">Risk: 0%</span>
                 </div>
-                <p class="text-xs mt-1">${currentLang === 'np' ? 'कुनै पनि अस्वाभाविक जोखिम भेटिएन। यद्यपि नयाँ लिङ्कहरू खोल्दा सचेत रहनुहोस्।' : 'No suspicious pattern found. Stay alert with unknown links.'}</p>
+                <p class="text-xs mt-1">${currentLang === 'np' ? 'हाम्रो डाटाबेसमा कुनै शंकास्पद गतिविधि भेटिएन।' : 'No suspicious pattern found in database.'}</p>
             `;
         } else {
             resultBox.classList.add('bg-slate-800', 'border-slate-600', 'text-slate-200');
             resultBox.innerHTML = `
                 <strong>ℹ️ जानकारी:</strong><br>
-                ${currentLang === 'np' ? 'कृपया सही लिङ्क (उदा: https://...) हालेर फेरि जाँच गर्नुहोस्।' : 'Please enter a valid link (e.g. https://...) and try again.'}
+                ${currentLang === 'np' ? 'कृपया सही लिङ्क वा नम्बर हालेर फेरि जाँच गर्नुहोस्।' : 'Please enter a valid link or phone number.'}
             `;
         }
     }
