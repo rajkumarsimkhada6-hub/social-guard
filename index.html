@@ -13,7 +13,7 @@
   
   <!-- Open Graph Image Preview for Facebook -->
   <meta property="og:title" content="SOCIAL GUARD - Scam & Phishing Protection">
-  <meta property="og:description" content="नेपालमा भइरहेका अनलाइन ठगी र स्क्यामबाट सुरक्षीत रहनुहोस्।">
+  <meta property="og:description" content="नेपालमा भइरहेका अनलाइन ठगी र स्क्यामबाट सुरक्षित रहनुहोस्।">
   <meta property="og:image" content="https://cdn-icons-png.flaticon.com/512/2092/2092663.png">
   
   <!-- Tailwind CSS & FontAwesome -->
@@ -104,13 +104,13 @@
       </div>
     </div>
 
-    <!-- RE-ADDED: Scam Links & Numbers List Section -->
+    <!-- Scam Links & Numbers List Section -->
     <div class="glass-card p-5 rounded-2xl space-y-3">
       <div class="flex justify-between items-center">
         <h3 class="text-base font-bold text-red-400 flex items-center gap-2">
           <i class="fa-solid fa-database"></i> स्क्याम लिङ्क र नम्बर सूची
         </h3>
-        <button onclick="openModal('reportModal')" class="text-emerald-400 hover:underline text-xs font-semibold">
+        <button onclick="openModal('scamListModal')" class="text-emerald-400 hover:underline text-xs font-semibold">
           View More (सबै हेर्नुहोस्)
         </button>
       </div>
@@ -134,7 +134,7 @@
       </div>
     </div>
 
-    <!-- RE-ADDED: Bottom Action Boxes -->
+    <!-- Bottom Action Boxes -->
     <div class="grid gap-4 md:grid-cols-2">
       <div class="glass-card p-5 rounded-2xl text-center space-y-3">
         <h3 class="text-amber-400 font-bold text-sm"><i class="fa-solid fa-star mr-1"></i> एप कस्तो लाग्यो? प्रतिक्रिया दिनुहोस्</h3>
@@ -160,7 +160,53 @@
     <p>© 2026 SOCIAL GUARD. All rights reserved.</p>
   </footer>
 
-  <!-- MODAL 1: Report Scam Modal -->
+  <!-- MODAL 1: Full Scam List Modal (View More) -->
+  <div id="scamListModal" class="fixed inset-0 bg-black/80 hidden backdrop-blur-sm flex items-center justify-center p-4 z-50">
+    <div class="glass-card max-w-lg w-full p-6 rounded-2xl space-y-4 max-h-[80vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b border-slate-700 pb-3">
+        <h3 class="font-bold text-lg text-red-400 flex items-center gap-2">
+          <i class="fa-solid fa-database"></i> दर्ता भएका प्रमुख स्क्याम सूची
+        </h3>
+        <button onclick="closeModal('scamListModal')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+      
+      <div class="space-y-3 text-xs">
+        <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-1">
+          <div class="flex justify-between font-bold">
+            <span class="text-red-400">[NUMBER] +977 9801234567</span>
+            <span class="text-slate-500">WhatsApp Lottery</span>
+          </div>
+          <p class="text-slate-400">ह्वाट्सएपमा २५ लाखको चिठ्ठा पर्यो भनेर ट्याक्स मागिने ठगी नम्बर।</p>
+        </div>
+
+        <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-1">
+          <div class="flex justify-between font-bold">
+            <span class="text-red-400">[LINK] ncell-free-bonus.tk</span>
+            <span class="text-slate-500">Phishing Link</span>
+          </div>
+          <p class="text-slate-400">एनसेलको नाममा फेक डाटा अफर दिएर फेसबुक पासवर्ड चोर्ने लिङ्क।</p>
+        </div>
+
+        <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-1">
+          <div class="flex justify-between font-bold">
+            <span class="text-red-400">[LINK] e-sewa-cashback-offer.com</span>
+            <span class="text-slate-500">eSewa Scam</span>
+          </div>
+          <p class="text-slate-400">इ-सेवाको क्यासब्याक अफर भन्दै वालेटको एमपीआईएन (MPIN) माग्ने नक्कली वेबसाइट।</p>
+        </div>
+
+        <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-1">
+          <div class="flex justify-between font-bold">
+            <span class="text-red-400">[NUMBER] +977 9841000000</span>
+            <span class="text-slate-500">OTP Theft Call</span>
+          </div>
+          <p class="text-slate-400">बैंकको कर्मचारी बनेर खाता नवीकरण गर्ने बहानामा ओटिपी (OTP) माग्ने कल।</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: Report Scam Modal -->
   <div id="reportModal" class="fixed inset-0 bg-black/80 hidden backdrop-blur-sm flex items-center justify-center p-4 z-50">
     <div class="glass-card max-w-md w-full p-6 rounded-2xl space-y-4 border border-red-500/30">
       <div class="flex justify-between items-center">
@@ -187,7 +233,7 @@
     </div>
   </div>
 
-  <!-- MODAL 2: Feedback Modal -->
+  <!-- MODAL 3: Feedback Modal -->
   <div id="feedbackModal" class="fixed inset-0 bg-black/80 hidden backdrop-blur-sm flex items-center justify-center p-4 z-50">
     <div class="glass-card max-w-md w-full p-6 rounded-2xl space-y-4">
       <div class="flex justify-between items-center">
