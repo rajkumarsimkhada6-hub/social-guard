@@ -75,7 +75,15 @@
       </div>
 
       <!-- Result Area -->
-      <div id="resultBox" class="hidden p-4 rounded-xl text-sm font-semibold"></div>
+      <div id="resultBox" class="hidden p-4 rounded-xl text-sm"></div>
+
+      <!-- Permanently Visible Disclaimer Note -->
+      <div class="p-3 bg-slate-900/60 border border-slate-800 rounded-xl text-[11px] text-slate-400 leading-relaxed flex items-start gap-2">
+        <i class="fa-solid fa-shield-halved text-amber-400 text-sm mt-0.5"></i>
+        <div>
+          <strong class="text-slate-300">सुरक्षा सचेतना नोट:</strong> कुनै पनि लिङ्कलाई १००% सुरक्षित मान्न सकिँदैन। यदि कुनै लिङ्क वा वेबसाइटले फोनको एड्मिन पर्मिसन, कल, फोटो, कन्ट्याक्ट वा व्यक्तिगत विवरण माग्छ भने तुरुन्त बन्द गर्नुहोस् र आफ्नो सुरक्षा आफैँ मिलाउनुहोस्।
+        </div>
+      </div>
     </div>
 
     <!-- AdSpace -->
@@ -350,8 +358,11 @@
         res.className = "p-4 rounded-xl text-sm font-semibold border bg-red-500/20 text-red-400 border-red-500/40";
         res.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-2"></i> 🚨 <strong>उच्च जोखिम (High Scam Risk)!</strong> यो लिङ्क वा नम्बर असुरक्षित/ठगी नियतको हुन सक्छ। सावधान रहनुहोस्।`;
       } else {
-        res.className = "p-4 rounded-xl text-sm font-semibold border bg-emerald-500/20 text-emerald-400 border-emerald-500/40";
-        res.innerHTML = `<i class="fa-solid fa-circle-check mr-2"></i> ✅ <strong>सामान्य सुरक्षित (Low Risk):</strong> कुनै प्रत्यक्ष ठगीका संकेतहरू भेटिएनन्।`;
+        res.className = "p-4 rounded-xl text-sm border bg-emerald-500/20 text-emerald-400 border-emerald-500/40 space-y-1";
+        res.innerHTML = `<div><i class="fa-solid fa-circle-check mr-2"></i> ✅ <strong>सामान्य सुरक्षित (Low Risk):</strong> कुनै प्रत्यक्ष ठगीका संकेतहरू भेटिएनन्।</div>
+                         <div class="text-[11px] text-slate-300 font-normal mt-1 border-t border-emerald-500/20 pt-1">
+                           ⚠️ <em>नोट: कुनै पनि लिङ्क १००% सुरक्षित हुँदैन। यदि यस लिङ्कले फोनको एड्मिन पर्मिसन, कल, फोटो वा व्यक्तिगत विवरण मागेमा आफ्नै सतर्कता अपनाउनुहोला।</em>
+                         </div>`;
       }
     }
   </script>
