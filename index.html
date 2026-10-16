@@ -20,7 +20,7 @@
     </header>
 
     <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8 max-w-lg flex-1">
+    <main class="container mx-auto px-4 py-8 max-w-lg flex-1 space-y-6">
         
         <!-- Link Checker Card -->
         <div class="bg-slate-800 p-6 rounded-2xl shadow-xl border border-slate-700">
@@ -28,25 +28,64 @@
                 <i class="fa-solid fa-magnifying-glass"></i> लिङ्क जाँच गर्नुहोस् (Check Link)
             </h2>
             <div class="space-y-4">
-                <div>
-                    <input type="text" id="linkInput" placeholder="यहाँ लिङ्क वा मेसेज पेस्ट गर्नुहोस्..." 
-                        class="w-full p-3 rounded-xl bg-slate-900 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 text-sm">
+                <div class="relative">
+                    <input type="text" id="linkInput" placeholder="यहाँ लिङ्क वा म्यासेज पेस्ट गर्नुहोस्..." 
+                    class="w-full p-3 pr-10 rounded-xl bg-slate-900 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 text-sm">
+                    <!-- Clear Button inside input -->
+                    <button onclick="clearInput()" type="button" class="absolute right-3 top-3 text-slate-400 hover:text-white text-sm">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
                 </div>
-                <button onclick="checkLink()" 
-                    class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 rounded-xl shadow-md transition duration-200">
-                    जाँच गर्नुहोस् (Verify)
-                </button>
+
+                <!-- Paste and Verify Buttons -->
+                <div class="flex gap-2">
+                    <button onclick="pasteLink()" 
+                        class="flex-1 bg-slate-700 hover:bg-slate-600 text-slate-200 font-medium py-2.5 rounded-xl text-sm transition duration-200 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-paste"></i> पेस्ट गर्नुहोस्
+                    </button>
+                    <button onclick="checkLink()" 
+                        class="flex-1 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-2.5 rounded-xl text-sm shadow-md transition duration-200 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-shield-check"></i> जाँच गर्नुहोस्
+                    </button>
+                </div>
             </div>
 
             <!-- Result Box -->
             <div id="resultBox" class="mt-5 hidden p-4 rounded-xl text-sm border"></div>
         </div>
 
+        <!-- Live Scam Alerts / Notice Board -->
+        <div class="bg-slate-800 p-6 rounded-2xl shadow-xl border border-slate-700">
+            <h3 class="text-md font-semibold text-amber-400 mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-bell text-amber-400 animate-pulse"></i> हाल चलिरहेका स्क्याम सचेतना (Scam Alerts)
+            </h3>
+            
+            <div class="space-y-3">
+                <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-700/80 text-xs text-slate-300">
+                    <span class="inline-block bg-red-900/60 text-red-300 px-2 py-0.5 rounded text-[10px] font-semibold mb-1">ताजा चेतावनी</span>
+                    <p class="font-medium text-slate-100">नेपाल टेलिकम / एनसेल नि:शुल्क टपअप/डाटा प्याक स्क्याम</p>
+                    <p class="text-slate-400 mt-0.5">सामाजिक सञ्जालमा "५०GB फ्रि डाटा पाउनुहोस्" भन्दै आउने लिङ्कमा क्लिक नगर्नुहोस्।</p>
+                </div>
+
+                <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-700/80 text-xs text-slate-300">
+                    <span class="inline-block bg-amber-900/60 text-amber-300 px-2 py-0.5 rounded text-[10px] font-semibold mb-1">सावधान</span>
+                    <p class="font-medium text-slate-100">टेलिग्राम पार्ट-टाइम जब / लाइक-एण्ड-अर्न स्क्याम</p>
+                    <p class="text-slate-400 mt-0.5">युट्युब भिडियो लाइक गरेर दैनिक रू. ३००० कमाउनुहोस् भन्ने म्यासेजबाट सचेत रहनुहोस्।</p>
+                </div>
+
+                <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-700/80 text-xs text-slate-300">
+                    <span class="inline-block bg-amber-900/60 text-amber-300 px-2 py-0.5 rounded text-[10px] font-semibold mb-1">सावधान</span>
+                    <p class="font-medium text-slate-100">फेसबुक/ह्वाट्सएप लटरी र गिफ्ट कोड स्क्याम</p>
+                    <p class="text-slate-400 mt-0.5">अज्ञात व्यक्तिले पठाएको "तपाईंले लटरी जित्नुभयो, ट्याक्स तिर्नुहोस्" भन्ने म्यासेज पूर्णतया नक्कली हो।</p>
+                </div>
+            </div>
+        </div>
+
         <!-- Report Button Card -->
-        <div class="mt-6 bg-slate-800 p-6 rounded-2xl shadow-xl border border-slate-700 text-center">
-            <h3 class="text-md font-medium text-slate-300 mb-2">के तपाईँले नयाँ स्क्याम वा शंकास्पद गतिविधि भेट्नुभयो?</h3>
+        <div class="bg-slate-800 p-6 rounded-2xl shadow-xl border border-slate-700 text-center">
+            <h3 class="text-md font-medium text-slate-300 mb-2">के तपाईँले नयाँ स्क्याम वा शंकास्पद गतिविधि फेला पार्नुभयो?</h3>
             <p class="text-xs text-slate-400 mb-4">अन्य प्रयोगकर्ताहरूलाई जोगाउन रिपोर्ट पठाउनुहोस्।</p>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSePCPJvfOU_yjBWu6w08mSCaV5uikpEyvzOGv-yMSnltmGIZQ/viewform?usp=dialog" 
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSePCJfvF0U_yjBwW0BhSCaV5uikPGEyvZ06v-yN5ltm6I2Q/viewform" 
                target="_blank" 
                class="inline-flex items-center justify-center gap-2 w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-xl shadow-md transition duration-200">
                 <i class="fa-solid fa-triangle-exclamation"></i> स्क्याम रिपोर्ट गर्नुहोस् (Report Scam)
@@ -60,60 +99,72 @@
         &copy; 2026 SOCIAL GUARD. All rights reserved.
     </footer>
 
-    <!-- JavaScript for Verification -->
+    <!-- JavaScript for Verification & Quick Actions -->
     <script>
-        function checkLink() {
-            const input = document.getElementById('linkInput').value.trim();
-            const resultBox = document.getElementById('resultBox');
-
-            if (!input) {
-                alert('कृपया कुनै लिङ्क वा मेसेज हाल्नुहोस्!');
-                return;
-            }
-
-            resultBox.classList.remove('hidden', 'bg-red-950', 'border-red-600', 'text-red-200', 'bg-emerald-950', 'border-emerald-600', 'text-emerald-200', 'bg-yellow-950', 'border-yellow-600', 'text-yellow-200');
-
-            // Suspicious patterns
-            const suspiciousKeywords = ['bit.ly', 'tinyurl', 'free-gift', 'lottery', 'claim-now', 'whatsapp-group', 'telegram-link', 'login-verify', 'click-here'];
-            const lowerInput = input.toLowerCase();
-
-            let isSuspicious = suspiciousKeywords.some(keyword => lowerInput.includes(keyword));
-
-            if (isSuspicious) {
-                resultBox.classList.add('bg-red-950', 'border-red-600', 'text-red-200');
-                resultBox.innerHTML = `
-                    <div class="flex items-start gap-2">
-                        <i class="fa-solid fa-triangle-exclamation text-xl text-red-500 mt-0.5"></i>
-                        <div>
-                            <strong class="block text-red-400 font-bold mb-1">चेतावनी: यो शंकास्पद लिङ्क हुन सक्छ!</strong>
-                            यस्ता लिङ्कमा व्यक्तिगत जानकारी, पासवर्ड वा OTP हाल्ने नगर्नुहोस्।
-                        </div>
-                    </div>
-                `;
-            } else if (input.startsWith('http://') || !input.startsWith('https://')) {
-                resultBox.classList.add('bg-yellow-950', 'border-yellow-600', 'text-yellow-200');
-                resultBox.innerHTML = `
-                    <div class="flex items-start gap-2">
-                        <i class="fa-solid fa-circle-exclamation text-xl text-yellow-500 mt-0.5"></i>
-                        <div>
-                            <strong class="block text-yellow-400 font-bold mb-1">सावधानी अपनाउनुहोस्!</strong>
-                            यो लिङ्क असुरक्षित (HTTP) देखिन्छ वा पूर्ण URL ढाँचामा छैन।
-                        </div>
-                    </div>
-                `;
-            } else {
-                resultBox.classList.add('bg-emerald-950', 'border-emerald-600', 'text-emerald-200');
-                resultBox.innerHTML = `
-                    <div class="flex items-start gap-2">
-                        <i class="fa-solid fa-circle-check text-xl text-emerald-500 mt-0.5"></i>
-                        <div>
-                            <strong class="block text-emerald-400 font-bold mb-1">सुरक्षित जस्तो देखिन्छ</strong>
-                            यद्यपि अज्ञात स्रोतबाट आएका मेसेज वा लिङ्कहरू खोल्दा सधैँ सचेत रहनुहोस्।
-                        </div>
-                    </div>
-                `;
-            }
+    async function pasteLink() {
+        try {
+            const text = await navigator.clipboard.readText();
+            document.getElementById('linkInput').value = text;
+        } catch (err) {
+            alert('क्लिपबोर्डबाट म्यासेज पढ्न अनुमति छैन। कृपया हाथले नै (Long Press गरेर) पेस्ट गर्नुहोस्।');
         }
+    }
+
+    function clearInput() {
+        document.getElementById('linkInput').value = '';
+        document.getElementById('resultBox').classList.add('hidden');
+    }
+
+    function checkLink() {
+        const input = document.getElementById('linkInput').value.trim();
+        const resultBox = document.getElementById('resultBox');
+
+        if (!input) {
+            alert('कृपया पहिले लिङ्क वा म्यासेज हाल्नुहोस्!');
+            return;
+        }
+
+        const inputLower = input.toLowerCase();
+
+        const dangerousPatterns = [
+            ".tk", ".ml", ".ga", ".cf", ".gq", ".xyz", ".top", ".club",
+            "free-recharge", "lottery", "facebook-login", "claim-prize", 
+            "bank-update", "offer-bonus", "telegram-group", "win-cash"
+        ];
+
+        const shortenerPatterns = ["bit.ly", "tinyurl.com", "goo.gl", "is.gd", "buff.ly", "t.co"];
+
+        const isDangerous = dangerousPatterns.some(pattern => inputLower.includes(pattern));
+        const isShortener = shortenerPatterns.some(pattern => inputLower.includes(pattern));
+
+        resultBox.classList.remove('hidden', 'bg-red-950', 'border-red-600', 'text-red-200', 'bg-emerald-950', 'border-emerald-600', 'text-emerald-200', 'bg-amber-950', 'border-amber-600', 'text-amber-200');
+
+        if (isDangerous) {
+            resultBox.classList.add('bg-red-950', 'border-red-600', 'text-red-200');
+            resultBox.innerHTML = `
+                <strong>🚨 चेतावनी: यो शंकास्पद लिङ्क हुन सक्छ!</strong><br>
+                यस्ता लिङ्कमा व्यक्तिगत जानकारी, पासवर्ड वा OTP हाल्ने नगर्नुहोस्।
+            `;
+        } else if (isShortener) {
+            resultBox.classList.add('bg-amber-950', 'border-amber-600', 'text-amber-200');
+            resultBox.innerHTML = `
+                <strong>⚠️ सावधानी अपनाउनुहोस्!</strong><br>
+                यो लिङ्क असुरक्षित (HTTP) देखिन्छ वा पूर्ण URL ढाँचामा छैन।
+            `;
+        } else if (inputLower.includes("http://") || inputLower.includes("https://")) {
+            resultBox.classList.add('bg-emerald-950', 'border-emerald-600', 'text-emerald-200');
+            resultBox.innerHTML = `
+                <strong>✅ सुरक्षित जस्तो देखिन्छ</strong><br>
+                यद्यपि अज्ञात स्रोतबाट आएका मेसेज वा लिङ्कहरू खोल्दा सधैँ सचेत रहनुहोस्।
+            `;
+        } else {
+            resultBox.classList.add('bg-slate-800', 'border-slate-600', 'text-slate-200');
+            resultBox.innerHTML = `
+                <strong>ℹ️ जानकारी:</strong><br>
+                कृपया सही लिङ्क (उदा: https://...) हालेर फेरि जाँच गर्नुहोस्।
+            `;
+        }
+    }
     </script>
 </body>
 </html>
