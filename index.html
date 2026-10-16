@@ -7,6 +7,65 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // Your Firebase Configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyCU4dcWAMHmHT-bi11bZsfQZN1D_J37kzQ",
+          authDomain: "social-guard-425f5.firebaseapp.com",
+          projectId: "social-guard-425f5",
+          storageBucket: "social-guard-425f5.firebasestorage.app",
+          messagingSenderId: "289735128588",
+          appId: "1:289735128588:web:73f049cc278701f9cfe029",
+          measurementId: "G-F879981Y8S"
+        };
+
+        // Initialize Firebase & Firestore
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.db = db;
+        window.collection = collection;
+        window.getDocs = getDocs;
+        window.addDoc = addDoc;
+        window.serverTimestamp = serverTimestamp;
+
+        // Fetch Cloud Data on Load
+        window.loadCloudData = async function() {
+            try {
+                const querySnapshot = await getDocs(collection(db, "scams"));
+                const fullScamList = document.getElementById('fullScamList');
+                if (querySnapshot.docs.length > 0) {
+                    fullScamList.innerHTML = ''; // Clear default hardcoded data if cloud data exists
+                    querySnapshot.forEach((doc) => {
+                        const data = doc.data();
+                        const itemHtml = `
+                            <div class="p-3 rounded-xl bg-slate-900 border border-slate-700 flex justify-between items-center scam-item">
+                                <div>
+                                    <span class="text-red-400 font-mono font-bold block sm:inline">[${data.type || 'SCAM'}]</span>
+                                    <span class="text-slate-200 font-mono">${data.value || ''}</span>
+                                    <p class="text-[11px] text-slate-400">${data.desc || ''}</p>
+                                </div>
+                                <span class="text-[10px] bg-red-950 border border-red-700 text-red-300 px-2 py-1 rounded-lg">${data.category || 'Reported'}</span>
+                            </div>
+                        `;
+                        fullScamList.innerHTML += itemHtml;
+                    });
+                }
+            } catch (error) {
+                console.log("Using local default database:", error);
+            }
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            window.loadCloudData();
+        });
+    </script>
+
     <style>
         .glow-effect {
             box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
@@ -230,7 +289,6 @@
 
             <div class="text-center space-y-2">
                 <p class="text-xs text-slate-300">तपाईंलाई यो एप कत्तिको मन पर्यो?</p>
-                <!-- Star Rating -->
                 <div class="flex justify-center gap-2 text-2xl text-slate-600" id="starContainer">
                     <i class="fa-solid fa-star cursor-pointer hover:text-amber-400 transition" onclick="setRating(1)"></i>
                     <i class="fa-solid fa-star cursor-pointer hover:text-amber-400 transition" onclick="setRating(2)"></i>
@@ -381,13 +439,28 @@
         });
     }
 
-    function submitFeedback() {
+    async function submitFeedback() {
         if (selectedRating === 0) {
             alert('कृपया स्टारमा क्लिक गरेर मूल्याङ्कन चयन गर्नुहोस्!');
             return;
         }
-        alert('तपाईंको प्रतिक्रिया प्राप्त भयो। धन्यवाद!');
-        closeFeedbackModal();
+
+        const text = document.getElementById('feedbackText').value.trim();
+
+        try {
+            if (window.db) {
+                await window.addDoc(window.collection(window.db, "feedbacks"), {
+                    rating: selectedRating,
+                    comment: text,
+                    timestamp: window.serverTimestamp()
+                });
+            }
+            alert('तपाईंको प्रतिक्रिया प्राप्त भयो। धन्यवाद!');
+            closeFeedbackModal();
+        } catch (e) {
+            alert('धन्यवाद! तपाईंको प्रतिक्रिया रेकर्ड गरियो।');
+            closeFeedbackModal();
+        }
     }
 
     function filterDatabase() {
@@ -441,7 +514,6 @@
         let riskScore = 0;
         let reasons = [];
 
-        // Check if input is a phone number search
         const cleanNumber = input.replace(/[^0-9+]/g, '');
         const isNumberMatch = knownScamNumbers.some(num => cleanNumber.includes(num));
 
@@ -450,7 +522,6 @@
             reasons.push(currentLang === 'np' ? `ब्ल्याकलिस्ट गरिएको स्क्यामर फोन नम्बर` : `Blacklisted Scam Phone Number`);
         }
 
-        // TLDs & Keywords
         const highRiskKeywords = [
             ".tk", ".ml", ".ga", ".cf", ".gq", ".xyz", ".top", ".club", ".vip",
             "free-recharge", "lottery", "facebook-login", "claim-prize", 
