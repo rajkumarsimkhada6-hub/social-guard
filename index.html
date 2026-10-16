@@ -51,13 +51,13 @@
                     </button>
                     <button onclick="checkLink()" id="verifyBtn"
                         class="flex-1 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-2.5 rounded-xl text-sm shadow-md transition duration-200 flex items-center justify-center gap-1.5">
-                        <i class="fa-solid fa-shield-check"></i> जाँच गर्नुहोस्
+                        <i class="fa-solid fa-microchip"></i> AI अटो विश्लेषण
                     </button>
                 </div>
             </div>
 
             <!-- Result Box -->
-            <div id="resultBox" class="mt-5 hidden p-4 rounded-xl text-sm border"></div>
+            <div id="resultBox" class="mt-5 hidden p-4 rounded-xl text-sm border space-y-2"></div>
         </div>
 
         <!-- Live Scam Alerts / Notice Board -->
@@ -193,7 +193,7 @@
         &copy; 2026 SOCIAL GUARD. All rights reserved.
     </footer>
 
-    <!-- JavaScript for Verification, Quick Actions, Modal & Language -->
+    <!-- JavaScript for Smart Auto-Analysis, Quick Actions, Modal & Language -->
     <script>
     let currentLang = 'np';
 
@@ -204,7 +204,7 @@
             checkTitle: '<i class="fa-solid fa-magnifying-glass"></i> लिङ्क जाँच गर्नुहोस् (Check Link)',
             inputPlaceholder: "यहाँ लिङ्क वा म्यासेज पेस्ट गर्नुहोस्...",
             pasteBtn: '<i class="fa-solid fa-paste"></i> पेस्ट गर्नुहोस्',
-            verifyBtn: '<i class="fa-solid fa-shield-check"></i> जाँच गर्नुहोस्',
+            verifyBtn: '<i class="fa-solid fa-microchip"></i> AI अटो विश्लेषण',
             alertTitle: '<i class="fa-solid fa-bell text-amber-400 animate-pulse"></i> हाल चलिरहेका स्क्याम सचेतना (Scam Alerts)',
             tag1: "ताजा चेतावनी",
             alert1Title: "नेपाल टेलिकम / एनसेल नि:शुल्क टपअप/डाटा प्याक स्क्याम",
@@ -228,7 +228,7 @@
             checkTitle: '<i class="fa-solid fa-magnifying-glass"></i> Check Link',
             inputPlaceholder: "Paste link or message here...",
             pasteBtn: '<i class="fa-solid fa-paste"></i> Paste',
-            verifyBtn: '<i class="fa-solid fa-shield-check"></i> Verify',
+            verifyBtn: '<i class="fa-solid fa-microchip"></i> AI Auto Analysis',
             alertTitle: '<i class="fa-solid fa-bell text-amber-400 animate-pulse"></i> Live Scam Alerts',
             tag1: "HOT ALERT",
             alert1Title: "NTC / Ncell Free Recharge & Data Scam",
@@ -322,55 +322,88 @@
         }
 
         const inputLower = input.toLowerCase();
+        let riskScore = 0;
+        let reasons = [];
 
-        const dangerousPatterns = [
-            ".tk", ".ml", ".ga", ".cf", ".gq", ".xyz", ".top", ".club",
+        // 1. High Risk TLDs & Suspicious Words
+        const highRiskKeywords = [
+            ".tk", ".ml", ".ga", ".cf", ".gq", ".xyz", ".top", ".club", ".vip",
             "free-recharge", "lottery", "facebook-login", "claim-prize", 
-            "bank-update", "offer-bonus", "telegram-group", "win-cash"
+            "bank-update", "offer-bonus", "telegram-group", "win-cash", "earn-money", "free-gb"
         ];
 
-        const shortenerPatterns = ["bit.ly", "tinyurl.com", "goo.gl", "is.gd", "buff.ly", "t.co"];
+        // 2. Shorteners
+        const shorteners = ["bit.ly", "tinyurl.com", "goo.gl", "is.gd", "buff.ly", "t.co"];
 
-        const isDangerous = dangerousPatterns.some(pattern => inputLower.includes(pattern));
-        const isShortener = shortenerPatterns.some(pattern => inputLower.includes(pattern));
+        // Analyze input
+        highRiskKeywords.forEach(kw => {
+            if (inputLower.includes(kw)) {
+                riskScore += 40;
+                reasons.push(currentLang === 'np' ? `शंकास्पद शब्द/डोमेन: "${kw}"` : `Suspicious keyword/domain: "${kw}"`);
+            }
+        });
+
+        shorteners.forEach(st => {
+            if (inputLower.includes(st)) {
+                riskScore += 25;
+                reasons.push(currentLang === 'np' ? `सर्टनर लिङ्क (गन्तव्य लुकाइएको)` : `Shortened URL (Destination Hidden)`);
+            }
+        });
+
+        // Check if plain IP address is used
+        const ipPattern = /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/;
+        if (ipPattern.test(inputLower)) {
+            riskScore += 35;
+            reasons.push(currentLang === 'np' ? `अस्वाभाविक IP ठेगाना (Domain Name नभएको)` : `Raw IP address used instead of domain`);
+        }
+
+        // Check HTTP vs HTTPS
+        if (inputLower.startsWith("http://")) {
+            riskScore += 15;
+            reasons.push(currentLang === 'np' ? `असुरक्षित HTTP प्रोटोकल (SSL नभएको)` : `Insecure HTTP connection`);
+        }
+
+        // Cap risk score at 99%
+        riskScore = Math.min(riskScore, 99);
 
         resultBox.classList.remove('hidden', 'bg-red-950', 'border-red-600', 'text-red-200', 'bg-emerald-950', 'border-emerald-600', 'text-emerald-200', 'bg-amber-950', 'border-amber-600', 'text-amber-200');
 
-        if (isDangerous) {
+        let reasonText = reasons.length > 0 ? `<ul class="list-disc list-inside mt-1 text-xs opacity-80">${reasons.map(r => `<li>${r}</li>`).join('')}</ul>` : '';
+
+        if (riskScore >= 50) {
             resultBox.classList.add('bg-red-950', 'border-red-600', 'text-red-200');
-            resultBox.innerHTML = currentLang === 'np' ? `
-                <strong>🚨 चेतावनी: यो शंकास्पद लिङ्क हुन सक्छ!</strong><br>
-                यस्ता लिङ्कमा व्यक्तिगत जानकारी, पासवर्ड वा OTP हाल्ने नगर्नुहोस्।
-            ` : `
-                <strong>🚨 High Risk / Scam Link Detected!</strong><br>
-                Do not share personal details, passwords, or OTPs on this link.
+            resultBox.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <strong>🚨 उच्च जोखिम (High Risk Detected)</strong>
+                    <span class="bg-red-800 text-white font-bold px-2 py-0.5 rounded text-xs">Risk: ${riskScore}%</span>
+                </div>
+                <p class="text-xs mt-1">${currentLang === 'np' ? 'यो अत्यन्त शंकास्पद देखिन्छ। यसमा ओटीपी, पासवर्ड वा व्यक्तिगत विवरण नदिनुहोस्!' : 'High risk scam link detected. Do not share OTPs or personal details!'}</p>
+                ${reasonText}
             `;
-        } else if (isShortener) {
+        } else if (riskScore > 0) {
             resultBox.classList.add('bg-amber-950', 'border-amber-600', 'text-amber-200');
-            resultBox.innerHTML = currentLang === 'np' ? `
-                <strong>⚠️ सावधानी अपनाउनुहोस्!</strong><br>
-                यो सर्ट लिङ्क (Shortened URL) हो। यसले सक्कली वेबसाइट लुकाएको हुन सक्छ।
-            ` : `
-                <strong>⚠️ Warning: Shortened Link Detected!</strong><br>
-                This link uses a shortener which might hide the real destination.
+            resultBox.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <strong>⚠️ मध्यम जोखिम / सावधानी (Warning)</strong>
+                    <span class="bg-amber-800 text-white font-bold px-2 py-0.5 rounded text-xs">Risk: ${riskScore}%</span>
+                </div>
+                <p class="text-xs mt-1">${currentLang === 'np' ? 'यो लिङ्कमा केही अस्वाभाविक संकेतहरू पाइएका छन्। सावधानी अपनाउनुहोस्।' : 'Some suspicious indicators found. Proceed with caution.'}</p>
+                ${reasonText}
             `;
-        } else if (inputLower.includes("http://") || inputLower.includes("https://")) {
+        } else if (inputLower.includes("https://")) {
             resultBox.classList.add('bg-emerald-950', 'border-emerald-600', 'text-emerald-200');
-            resultBox.innerHTML = currentLang === 'np' ? `
-                <strong>✅ सुरक्षित जस्तो देखिन्छ</strong><br>
-                यद्यपि अज्ञात स्रोतबाट आएका मेसेज वा लिङ्कहरू खोल्दा सधैँ सचेत रहनुहोस्।
-            ` : `
-                <strong>✅ Looks Relatively Safe</strong><br>
-                Always stay cautious when opening links from unknown senders.
+            resultBox.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <strong>✅ सुरक्षित जस्तो देखिन्छ (Safe Pattern)</strong>
+                    <span class="bg-emerald-800 text-white font-bold px-2 py-0.5 rounded text-xs">Risk: 0%</span>
+                </div>
+                <p class="text-xs mt-1">${currentLang === 'np' ? 'कुनै पनि अस्वाभाविक जोखिम भेटिएन। यद्यपि नयाँ लिङ्कहरू खोल्दा सचेत रहनुहोस्।' : 'No suspicious pattern found. Stay alert with unknown links.'}</p>
             `;
         } else {
             resultBox.classList.add('bg-slate-800', 'border-slate-600', 'text-slate-200');
-            resultBox.innerHTML = currentLang === 'np' ? `
+            resultBox.innerHTML = `
                 <strong>ℹ️ जानकारी:</strong><br>
-                कृपया सही लिङ्क (उदा: https://...) हालेर फेरि जाँच गर्नुहोस्।
-            ` : `
-                <strong>ℹ️ Info:</strong><br>
-                Please enter a valid link (e.g., https://...) and try again.
+                ${currentLang === 'np' ? 'कृपया सही लिङ्क (उदा: https://...) हालेर फेरि जाँच गर्नुहोस्।' : 'Please enter a valid link (e.g. https://...) and try again.'}
             `;
         }
     }
