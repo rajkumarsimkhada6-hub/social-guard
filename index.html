@@ -47,9 +47,21 @@
   <main class="max-w-4xl mx-auto w-full p-4 space-y-6 flex-1">
     
     <!-- Title Section -->
-    <div class="text-center space-y-2 my-4">
+    <div class="text-center space-y-2 my-2">
       <h2 class="text-2xl md:text-3xl font-extrabold text-white">शंकास्पद लिङ्क तथा नम्बर जाँच गर्नुहोस्</h2>
       <p class="text-slate-400 text-sm">नेपालमा भइरहेका अनलाइन ठगी र स्क्यामबाट सुरक्षित रहनुहोस्।</p>
+    </div>
+
+    <!-- Stats Counter Boxes (Clicked to Open Lists) -->
+    <div class="grid grid-cols-2 gap-4">
+      <div onclick="openModal('checkedListModal')" class="glass-card p-4 rounded-2xl text-center cursor-pointer hover:border-emerald-500/50 transition shadow-lg">
+        <div class="text-xs text-slate-400 font-medium">जाँच गरिएका लिङ्क</div>
+        <div class="text-2xl font-extrabold text-emerald-400 mt-1">१,२८५+</div>
+      </div>
+      <div onclick="openModal('scamListModal')" class="glass-card p-4 rounded-2xl text-center cursor-pointer hover:border-red-500/50 transition shadow-lg">
+        <div class="text-xs text-slate-400 font-medium">रोकिएका स्क्याम</div>
+        <div class="text-2xl font-extrabold text-red-400 mt-1">४५२+</div>
+      </div>
     </div>
 
     <!-- Search / Scanner Box -->
@@ -81,7 +93,7 @@
       <div class="p-3 bg-slate-900/60 border border-slate-800 rounded-xl text-[11px] text-slate-400 leading-relaxed flex items-start gap-2">
         <i class="fa-solid fa-shield-halved text-amber-400 text-sm mt-0.5"></i>
         <div>
-          <strong class="text-slate-300">सुरक्षा सचेतना नोट:</strong> कुनै पनि लिङ्कलाई १००% सुरक्षित मान्न सकिँदैन। यदि कुनै लिङ्क वा वेबसाइटले फोनको एड्मिन पर्मिसन, कल, फोटो, कन्ट्याक्ट वा व्यक्तिगत विवरण माग्छ भने तुरुन्त बन्द गर्नुहोस् र आफ्नो सुरक्षा आफैँ मिलाउनुहोस्।
+          <strong class="text-slate-300">सुरक्षा सचेतना नोट:</strong> कुनै पनि लिङ्कलाई १००% सुरक्षित मान्न सकिँदैन। यदि कुनै लिङ्क वा वेबसाइटले फोनको एड्मिन पर्मिसन, कल, फोटो, कन्ट्याक्ट वा व्यक्तिगत विवरण माग्छ भने तुरुन्त बन्द गर्नुहोस् र आफ्नो सुरक्षा आफैँ मिलाउनुहोस्[span_2](start_span)[span_2](end_span)।
         </div>
       </div>
     </div>
@@ -107,37 +119,7 @@
         <div class="glass-card p-4 rounded-xl border-l-4 border-l-amber-500 space-y-1">
           <span class="bg-amber-500/20 text-amber-400 text-xs px-2 py-0.5 rounded font-bold">सावधान</span>
           <h4 class="font-bold text-slate-200 text-sm">टेलिग्राम पार्ट-टाइम जब / लाइक-एण्ड-अर्न स्क्याम</h4>
-          <p class="text-xs text-slate-400">युट्युब भिडियो लाइक गरेर दैनिक रु ३००० कमाउनुहोस् भन्ने म्यासेजहरूबाट सचेत रहनुहोस्।</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Reported Scam Links & Numbers List -->
-    <div class="glass-card p-5 rounded-2xl space-y-3">
-      <div class="flex justify-between items-center">
-        <h3 class="text-base font-bold text-red-400 flex items-center gap-2">
-          <i class="fa-solid fa-database"></i> स्क्याम केसमा दर्ता भएका नम्बर र लिङ्कहरू
-        </h3>
-        <button onclick="openModal('scamListModal')" class="text-emerald-400 hover:underline text-xs font-semibold">
-          View More (सबै हेर्नुहोस्)
-        </button>
-      </div>
-
-      <div class="space-y-2">
-        <div class="bg-slate-900/80 p-3 rounded-xl flex justify-between items-center text-xs">
-          <div class="flex items-center gap-2">
-            <span class="bg-red-500/20 text-red-400 font-bold px-2 py-0.5 rounded">[NUMBER]</span>
-            <span class="text-slate-200 font-mono">+977 9801234567</span>
-          </div>
-          <span class="bg-red-900/40 text-red-300 px-2 py-0.5 rounded text-[10px]">WhatsApp Lottery</span>
-        </div>
-
-        <div class="bg-slate-900/80 p-3 rounded-xl flex justify-between items-center text-xs">
-          <div class="flex items-center gap-2">
-            <span class="bg-red-500/20 text-red-400 font-bold px-2 py-0.5 rounded">[LINK]</span>
-            <span class="text-slate-200 font-mono">ncell-free-bonus.tk</span>
-          </div>
-          <span class="bg-red-900/40 text-red-300 px-2 py-0.5 rounded text-[10px]">Phishing</span>
+          <p class="text-xs text-slate-400">युट्युब भिडियो लाइक गरेर दैनिक रु ३ कमाउनुहोस् भन्ने म्यासेजहरूबाट सचेत रहनुहोस्।</p>
         </div>
       </div>
     </div>
@@ -168,12 +150,42 @@
     <p>© 2026 SOCIAL GUARD. All rights reserved.</p>
   </footer>
 
-  <!-- MODAL 1: Full Reported Scam List Modal (View More) -->
+  <!-- MODAL 1: Checked Links List (1,285+) -->
+  <div id="checkedListModal" class="fixed inset-0 bg-black/80 hidden backdrop-blur-sm flex items-center justify-center p-4 z-50">
+    <div class="glass-card max-w-lg w-full p-6 rounded-2xl space-y-4 max-h-[80vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b border-slate-700 pb-3">
+        <h3 class="font-bold text-lg text-emerald-400 flex items-center gap-2">
+          <i class="fa-solid fa-check-to-slot"></i> जाँच गरिएका सुरक्षित लिङ्कहरू (१,२८५+)
+        </h3>
+        <button onclick="closeModal('checkedListModal')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+      
+      <div class="space-y-3 text-xs">
+        <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-1">
+          <div class="flex justify-between font-bold">
+            <span class="text-emerald-400">https://nepal.gov.np</span>
+            <span class="text-slate-500">Official Portal</span>
+          </div>
+          <p class="text-slate-400">नेपाल सरकारको आधिकारिक पोर्टल, पूर्ण रूपमा सुरक्षित।</p>
+        </div>
+
+        <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-1">
+          <div class="flex justify-between font-bold">
+            <span class="text-emerald-400">https://google.com</span>
+            <span class="text-slate-500">Search Engine</span>
+          </div>
+          <p class="text-slate-400">गुगलको आधिकारिक र सुरक्षित डोमेन।</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: Blocked Scams List (452+) -->
   <div id="scamListModal" class="fixed inset-0 bg-black/80 hidden backdrop-blur-sm flex items-center justify-center p-4 z-50">
     <div class="glass-card max-w-lg w-full p-6 rounded-2xl space-y-4 max-h-[80vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b border-slate-700 pb-3">
         <h3 class="font-bold text-lg text-red-400 flex items-center gap-2">
-          <i class="fa-solid fa-database"></i> दर्ता भएका प्रमुख स्क्याम नम्बर र लिङ्कहरू
+          <i class="fa-solid fa-shield-halved"></i> रोकिएका स्क्याम र ठगी फाइलहरू (४५२+)
         </h3>
         <button onclick="closeModal('scamListModal')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
@@ -214,7 +226,7 @@
     </div>
   </div>
 
-  <!-- MODAL 2: Report Scam Modal -->
+  <!-- MODAL 3: Report Scam Modal -->
   <div id="reportModal" class="fixed inset-0 bg-black/80 hidden backdrop-blur-sm flex items-center justify-center p-4 z-50">
     <div class="glass-card max-w-md w-full p-6 rounded-2xl space-y-4 border border-red-500/30">
       <div class="flex justify-between items-center">
@@ -241,7 +253,7 @@
     </div>
   </div>
 
-  <!-- MODAL 3: Feedback Modal -->
+  <!-- MODAL 4: Feedback Modal -->
   <div id="feedbackModal" class="fixed inset-0 bg-black/80 hidden backdrop-blur-sm flex items-center justify-center p-4 z-50">
     <div class="glass-card max-w-md w-full p-6 rounded-2xl space-y-4">
       <div class="flex justify-between items-center">
@@ -361,7 +373,7 @@
         res.className = "p-4 rounded-xl text-sm border bg-emerald-500/20 text-emerald-400 border-emerald-500/40 space-y-1";
         res.innerHTML = `<div><i class="fa-solid fa-circle-check mr-2"></i> ✅ <strong>सामान्य सुरक्षित (Low Risk):</strong> कुनै प्रत्यक्ष ठगीका संकेतहरू भेटिएनन्।</div>
                          <div class="text-[11px] text-slate-300 font-normal mt-1 border-t border-emerald-500/20 pt-1">
-                           ⚠️ <em>नोट: कुनै पनि लिङ्क १००% सुरक्षित हुँदैन। यदि यस लिङ्कले फोनको एड्मिन पर्मिसन, कल, फोटो वा व्यक्तिगत विवरण मागेमा आफ्नै सतर्कता अपनाउनुहोला।</em>
+                           ⚠️ <em>नोट: कुनै पनि लिङ्क १००% सुरक्षित हुँदैन। यदि यस लिङ्कले फोनको एड्मिन पर्मिसन, कल, फोटो वा व्यक्तिगत विवरण मागेमा आफ्नै सतर्कता अपनाउनुहोला[span_3](start_span)[span_3](end_span)।</em>
                          </div>`;
       }
     }
